@@ -17,11 +17,19 @@ export class Controller {
 
   start() {
     this.view.showArea(this.game.viewArea);
+    this.game.createUpdatePanels(this.view.createBlockScore(), this.view.createBlockNextTetramino());
 
-    setInterval(() => {
-      this.game.moveDown();
-      this.view.showArea(this.game.viewArea);
-    }, 1000)
+    const tick = () => {
+      const time = (1100 - 100 * this.game.level);
+      if (this.game.gameOver) return;
+      setTimeout(() => {
+        this.game.moveDown();
+        this.view.showArea(this.game.viewArea);
+        tick();
+      }, time > 100 ? time : 100);
+    };
+
+    tick();
 
     window.addEventListener('keydown', evt => {
       const key = evt.code;
@@ -40,7 +48,7 @@ export class Controller {
           this.view.showArea(this.game.viewArea);
           break;
         case 'ArrowUp':
-          this.game.rotateTetromino();
+          this.game.rotateTetramino();
           this.view.showArea(this.game.viewArea);
           break;
       }
