@@ -2,8 +2,6 @@ export class Controller {
   constructor(game, view) {
     this.game = game;
     this.view = view;
-
-    this.view.init()
   }
 
   init(codeKey) {
